@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div>
+        <!-- logout button -->
+        <a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+    <div class="row">
+        <h2 class="text-center">Articles</h2>
+
+        {% if news.count < 1 %}
+
+        <div class="alert alert-danger text-center">
+            <p>There are no articles yet!</p>
+        </div>
+
+            {% else %}
+
+        {% for newsinfo in news %}
+        <div class="col-12 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    {{ newsinfo.title }}
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>{{ newsinfo.shortdescription }}</p>
+                        <footer class="blockquote-footer">last updated at {{ newsinfo.dateupdated|date('Y-m-d H:i')  }}</footer>
+                    </blockquote>
+                </div>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="d-flex m-4 justify-content-end">
+                        <form action="{{ path('delete_news') }}?articles={{ news.count }}" method="post">
+                            <input type="hidden" name="id" value="{{ newsinfo.id }}">
+                            <button id="{{ newsinfo.id }}" class="btn btn-primary major-news" type="submit">Delete Article</button>
+                        </form>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+        {% endfor %}
+                {{ pagerfanta(news) }}
+            {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

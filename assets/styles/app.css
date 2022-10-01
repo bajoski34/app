@@ -1,0 +1,19 @@
+@import "~bootstrap";
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+}
+
+body {
+    background-color: #FFFFFF;
+}
+
+h1 {
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
